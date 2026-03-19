@@ -3,36 +3,48 @@
 {% block title %}RJ Aesthetics{% endblock %}
 
 {% block content %}
-<div class="container mx-auto p-4 flex">
-    <aside class="w-1/4 p-4">
-        <h2 class="font-bold">Categories</h2>
-        <ul>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div class="max-w-[1600px] mx-auto p-4 flex flex-col md:flex-row gap-6">
+    
+    <aside class="w-full md:w-1/4 p-4 bg-white rounded-lg shadow-sm self-start">
+        <h2 class="font-bold text-lg mb-4 border-b pb-2">Categories</h2>
+        <ul class="flex flex-wrap gap-2 md:block">
             {% for category in categories %}
-            <li>
-                <a href="{% url 'products:product_list_by_category' category.slug %}">{{category.name}}</a>
+            <li class="mb-1">
+                <a href="{% url 'products:product_list_by_category' category.slug %}" 
+                   class="inline-block bg-gray-100 md:bg-transparent px-3 py-1 rounded-full text-sm hover:text-indigo-600 transition">
+                    {{category.name}}
+                </a>
             </li>
             {% endfor %}
         </ul>
     </aside>
-    <main class="w-3/4 p-4">
+
+    <main class="flex-1 p-4">
         {% if category %}
-        <h2 class="font-bold mb-4">{{category.name}}</h2>
+            <h2 class="font-bold mb-6 text-2xl text-gray-800">{{category.name}}</h2>
         {% else %}
-        <h2 class="font-bold mb-4">All Products:</h2>
+            <h2 class="font-bold mb-6 text-2xl text-gray-800">All Products</h2>
         {% endif %}
-        <div class="grid grid-cols-3 gap-4">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for product in products %}
-            <a href="{% url 'products:product_detail' product.id product.slug %}">
-            <div class="">
-                {% if product.image %}
-                <img src="{{product.image.url}}" alt="{{product.name}}" class="h-64 w-44 object-cover">
-                {% else %}
-                <p>The image is not available</p>
-                {% endif %}
-                <h3 class="font-semibold">{{product.name}}</h3>
-                <p>{{product.description}}</p>
-                <p class="text-green-600">₦{{product.price}}</p>
-            </div>
+            <a href="{% url 'products:product_detail' product.id product.slug %}" class="group">
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all border border-gray-100 p-3">
+                    {% if product.image %}
+                        <img src="{{product.image.url}}" alt="{{product.name}}" 
+                             class="h-72 w-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-300">
+                    {% else %}
+                        <div class="h-72 w-full bg-gray-200 flex items-center justify-center rounded-lg">No Image</div>
+                    {% endif %}
+                    
+                    <div class="mt-4">
+                        <h3 class="font-semibold text-gray-900 group-hover:text-indigo-600">{{product.name}}</h3>
+                        <p class="text-sm text-gray-500 mt-1 line-clamp-2">{{product.description}}</p>
+                        <p class="text-xl font-bold text-green-600 mt-2">₦{{product.price}}</p>
+                    </div>
+                </div>
             </a>
             {% endfor %}
         </div>
