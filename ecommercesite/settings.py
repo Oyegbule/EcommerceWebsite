@@ -15,6 +15,11 @@ from pathlib import Path
 import dj_database_url
 import os
 
+print("---------------------------------------")
+print(f"STARTUP DEBUG: CLOUD_NAME = {os.environ.get('CLOUDINARY_CLOUD_NAME')}")
+print(f"STARTUP DEBUG: DATABASE_URL_EXISTS = {bool(os.environ.get('DATABASE_URL'))}")
+print("---------------------------------------")
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -147,6 +152,3 @@ MEDIA_ROOT = BASE_DIR / 'mediafiles'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-import os
-print(f"DEBUG: Cloudinary Name is {os.environ.get('CLOUDINARY_CLOUD_NAME')}")
-print(f"DEBUG: Storage backend is {DEFAULT_FILE_STORAGE}")
