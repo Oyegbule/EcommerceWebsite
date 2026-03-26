@@ -3,6 +3,7 @@
 set -o errexit
 
 # 1. Install dependencies
+pip install --upgrade pip
 pip install -r requirements.txt
 npm install
 
