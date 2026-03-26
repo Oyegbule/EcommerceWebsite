@@ -85,10 +85,11 @@ WSGI_APPLICATION = 'ecommercesite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
 DATABASES = {
     'default': dj_database_url.config(
-        # This reads the DATABASE_URL from Render's Environment Variables
-        default=os.environ.get('DATABASE_URL'),
+        default=DATABASE_URL,
         conn_max_age=600
     )
 }
@@ -145,3 +146,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'mediafiles'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+import os
+print(f"DEBUG: Cloudinary Name is {os.environ.get('CLOUDINARY_CLOUD_NAME')}")
+print(f"DEBUG: Storage backend is {DEFAULT_FILE_STORAGE}")
